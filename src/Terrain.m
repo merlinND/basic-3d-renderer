@@ -2,7 +2,7 @@
 %%dont la taille de la maille est de 100m
 %%x  va donc de 0 ? (13-1)*100 m?tres
 %%y  va donc de 0 ? (10-1)*100 m?tres
-%%pour se faire une idee de ce terrain il suffit de faire : 
+%%pour se faire une idee de ce terrain il suffit de faire :
 %%surf(0:100:(13-1)*100,0:100:(10-1)*100,Terr);
 
 Terr=[670   672   670   675   690   680   650   675   690   680   700   892   895;
@@ -15,10 +15,3 @@ Terr=[670   672   670   675   690   680   650   675   690   680   700   892   89
       615   560   543   579   569   560   563   570   580   595   619   638   650;
       625   598   560   559   586   558   578   585   600   615   655   680   683;
       610   600   610   605   615   618   625   638   648   665   680   700   705];
-
-  
-
-
-
-
-

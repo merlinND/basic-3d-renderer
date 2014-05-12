@@ -42,4 +42,3 @@ figure(1)
 image(im)
 
 end
-

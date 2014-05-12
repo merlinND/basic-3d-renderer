@@ -1,10 +1,10 @@
 function im=tpiRemplirTriangleImage(im, ZB, Sommets, Bary, Couleur)
 
-% Remplit l'image im = [H W 3] avec 
-% la couleur Couleur = [R G B] à l'intérieur 
+% Remplit l'image im = [H W 3] avec
+% la couleur Couleur = [R G B] ï¿½ l'intï¿½rieur
 % du triangle de sommmets Sommets = [S1.lig S1.col ; S2.lig S2.col ; S3.lig S3.col]
-% si la profondeur de son barycentre Bary correspond à la valeur
-% enregistrée dans le Z-Buffer ZB
+% si la profondeur de son barycentre Bary correspond ï¿½ la valeur
+% enregistrï¿½e dans le Z-Buffer ZB
 Sommets=fliplr(Sommets);
 
 S=sortrows(Sommets);
@@ -13,7 +13,7 @@ V2=S(3,:)-S(1,:);
 SigneDet=det([V1;V2])>0;
 
 if SigneDet,
-    % Point interm?diaire à gauche
+    % Point interm?diaire ï¿½ gauche
     [COL, LIG]=bresenhamGauche(S(1,:),S(2,:));
     Lignes=LIG;
     ColonnesGauche=COL;
@@ -23,7 +23,7 @@ if SigneDet,
     ColonnesGauche=[ColonnesGauche COL(2:N)];
     [ColonnesDroit, LIG]=bresenhamDroit(S(1,:),S(3,:));
 else
- % Point interm?diaire à droite
+ % Point interm?diaire ï¿½ droite
     [COL, LIG]=bresenhamDroit(S(1,:),S(2,:));
     Lignes=LIG;
     ColonnesDroit=COL;
@@ -68,14 +68,14 @@ y1=round(S(1,1)); y2=round(S(2,1));
 dx=abs(x2-x1);
 dy=abs(y2-y1);
 steep=abs(dy)>abs(dx);
-if steep 
+if steep
     t=dx;
     dx=dy;
-    dy=t; 
+    dy=t;
 end
 
 %The main algorithm goes here.
-if dy==0 
+if dy==0
     q=zeros(dx+1,1);
 else
     q=[0;diff(mod([floor(dx/2):-dy:-dy*dx+floor(dx/2)]',dx))>=0];
@@ -113,14 +113,14 @@ y1=round(S1(1)); y2=round(S2(1));
 dx=abs(x2-x1);
 dy=abs(y2-y1);
 steep=abs(dy)>abs(dx);
-if steep 
+if steep
     t=dx;
     dx=dy;
-    dy=t; 
+    dy=t;
 end
 
 %The main algorithm goes here.
-if dy==0 
+if dy==0
     q=zeros(dx+1,1);
 else
     q=[0;diff(mod([floor(dx/2):-dy:-dy*dx+floor(dx/2)]',dx))>=0];
@@ -132,7 +132,7 @@ if steep
     if y1<=y2 y=[y1:y2]'; else y=[y1:-1:y2]'; end
     if x1<=x2 x=x1+cumsum(q);else x=x1-cumsum(q); end
 else
-    
+
     if x1<=x2 x=[x1:x2]'; else x=[x1:-1:x2]'; end
     if y1<=y2 y=y1+cumsum(q);else y=y1-cumsum(q); end
     xx(1,1)=x(1); yy(1,1)=y(1);
@@ -144,7 +144,7 @@ else
         end
     end
     x=xx; y=yy;
-    
+
 end
 x=x'; y=y';
 end
@@ -172,14 +172,14 @@ y1=round(S1(1)); y2=round(S2(1));
 dx=abs(x2-x1);
 dy=abs(y2-y1);
 steep=abs(dy)>abs(dx);
-if steep 
+if steep
     t=dx;
     dx=dy;
-    dy=t; 
+    dy=t;
 end
 
 %The main algorithm goes here.
-if dy==0 
+if dy==0
     q=zeros(dx+1,1);
 else
     q=[0;diff(mod([floor(dx/2):-dy:-dy*dx+floor(dx/2)]',dx))>=0];
@@ -191,7 +191,7 @@ if steep
     if y1<=y2 y=[y1:y2]'; else y=[y1:-1:y2]'; end
     if x1<=x2 x=x1+cumsum(q);else x=x1-cumsum(q); end
 else
-    
+
     if x1<=x2 x=[x1:x2]'; else x=[x1:-1:x2]'; end
     if y1<=y2 y=y1+cumsum(q);else y=y1-cumsum(q); end
     xx=[]; yy=[];
@@ -205,7 +205,7 @@ else
     xx=[xx; x(N)];
     yy=[yy; y(N)];
     x=xx; y=yy;
-    
+
 end
 x=x'; y=y';
 
