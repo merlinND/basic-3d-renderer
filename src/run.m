@@ -31,7 +31,7 @@ surf(0:100:(sz(2)-1)*100, 0:100:(sz(1)-1)*100, terrainFine);
 
 %% Tesselate (generate triangles from the heightmap)
 % TODO
-triangles = zeros(100, 3);
+scene = tesselation(terrain);
 
 %% Apply a perspective projection
 origin = [-10 -10 -10]';
