@@ -5,7 +5,6 @@
 %
 % In order to preview this terrain, just run:
 % > surf(0:100:(13-1)*100,0:100:(10-1)*100, terrain);
-
 terrain = [
 	  670   672   670   675   690   680   650   675   690   680   700   892   895;
       680   665   640   630   650   645   630   628   648   650   680   875   893;
@@ -23,4 +22,25 @@ terrain = [
 %% Simple 3D preview
 surf(0:100:(13-1)*100, 0:100:(10-1)*100, terrain);
 
-%% Perspective projection and 2D display
+%% Refine terrain using the diamond-square algorithm
+% TODO
+%terrainFine = diamondSquare(terrain)
+
+%% Tesselate (generate triangles from the heightmap)
+% TODO
+triangles = zeros(100, 3);
+
+%% Apply a perspective projection
+origin = [-10 -10 -10]';
+lookAt = [0 0 0]';
+d = 1;
+%projected = project(triangles, origin, lookAt, d);
+
+%% Sample rendering using Matlab's 2D drawing functions
+% TODO
+
+%% Rasterize using painter's algorithm
+% TODO
+
+%% Rasterize using Z-buffer
+% TODO
