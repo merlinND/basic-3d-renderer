@@ -21,7 +21,8 @@ function crudeRender(triangles, caption)
 	
 	for i = 1:size(triangles, 1)
 		triangle = reshape(triangles(i, :), 3, 2);
-		fill(triangle(:, 1), triangle(:, 2), colors(mod(i, nc)));
+		c = colors(mod(i - 1, nc) + 1);
+		fill(triangle(:, 1), triangle(:, 2), c);
 	end;
 
 end
