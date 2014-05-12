@@ -1,6 +1,6 @@
 function testZBuffer
 
-% Image finale
+% Final image
 im=zeros(200,200,3);
 
 % Z-Buffer
@@ -27,17 +27,17 @@ P33=[40 160];
 Bary3=30; % ou 10 ou 50
 Couleur3=[0.5 1 1]; % Cyan
 
-% Remplissage du Z-Buffer
+% Filling the Z-Buffer
 ZB=tpiRemplirTriangleBuffer(ZB, [P11; P12; P13], Bary1);
 ZB=tpiRemplirTriangleBuffer(ZB, [P21; P22; P23], Bary2);
 ZB=tpiRemplirTriangleBuffer(ZB, [P31; P32; P33], Bary3);
 
-% Remplissage de l'image
+% Filling the image
 im=tpiRemplirTriangleImage(im, ZB, [P11; P12; P13], Bary1, Couleur1);
 im=tpiRemplirTriangleImage(im, ZB, [P21; P22; P23], Bary2, Couleur2);
 im=tpiRemplirTriangleImage(im, ZB, [P31; P32; P33], Bary3, Couleur3);
 
-% Affichage
+% Display
 figure(1)
 image(im)
 
