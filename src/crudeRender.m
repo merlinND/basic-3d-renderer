@@ -10,7 +10,9 @@ function crudeRender(triangles, caption)
 	end;
 	
 	% Number of triangles to render
-	colors = ['r', 'g', 'b'];
+	colors = ['r', 'g', 'b', 'y', 'w', 'k'];
+	nc = length(colors);
+	
 	figure(1);
 	hold on;
 	if (nargin > 1)
@@ -19,7 +21,7 @@ function crudeRender(triangles, caption)
 	
 	for i = 1:size(triangles, 1)
 		triangle = reshape(triangles(i, :), 3, 2);
-		fill(triangle(:, 1), triangle(:, 2), colors(i));
+		fill(triangle(:, 1), triangle(:, 2), colors(mod(i, nc)));
 	end;
 
 end
