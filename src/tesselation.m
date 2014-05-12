@@ -11,6 +11,8 @@ sz = size(heightMap);
 
 scene = zeros(2 * (sz(1)-1) * (sz(2)-1), 9);
 
+% TODO: convert i, j coordinates to meters
+
 idx = 1;
 
 for i=1:sz(1)-1

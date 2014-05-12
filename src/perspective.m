@@ -10,7 +10,7 @@ function [ transformed ] = perspective(scene, origin, lookAt, d)
 	transform = zeros(4);
 	
 	% ----- Center origin
-	transform(:, 4) = [origin 1]';
+	transform(:, 4) = [-origin 1]';
 	
 	% ----- Rotate
 	w = (lookAt - origin)';
@@ -20,27 +20,27 @@ function [ transformed ] = perspective(scene, origin, lookAt, d)
 	w = w ./ norm(w);
 	u = u ./ norm(u);
 	v = v ./ norm(v);
-	transform(1:3, 1:3) = [u v w];
+	transform(1:3, 1:3) = inv([u v w]);
 	
 	% ----- Perspective
 	% Made easy by the use of homogeneous coordinates
 	transform(4, 3) = (1 ./ d);
 	transform
 	
-	% ----- Apply transform on each triangle and output
+	% ----- Apply transform to each triangle and output
 	transformed = zeros(size(scene));
 	% For each triangle in the scene
 	for i = 1:size(scene, 1)
 		% Use homogeneous coordinates
-		triangleH = zeros(4, 4);
-		triangleH(1:3, 1:3) = reshape(scene(i, :), 3, 3)';
-		triangleH(4, 4) = 1;
+		triangleH = [reshape(scene(i, :), 3, 3); ones(1, 3)];
 		
-		triangleH = triangleH * transform;
-		triangle = triangleH(1:3, 1:3);
-		triangle = triangle + triangleH(1:3, 4) * ones(1, 3);
-		triangle = (triangle ./ triangleH(4, 4));
-		% Apply projection and output
+		%triangleH
+		
+		triangleH = transform * triangleH;
+		% TODO: check
+		triangle = triangleH(1:3, 1:3) ./ (triangleH(4, :) * ones(3, 1));
+		
+		% Output
 		transformed(i, :) = reshape(triangle, 1, 9);
 	end;
 end

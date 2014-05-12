@@ -34,11 +34,17 @@ surf(0:100:(sz(2)-1)*100, 0:100:(sz(1)-1)*100, terrainFine);
 scene = tesselation(terrain);
 
 %% Apply a perspective projection
-origin = [20 20 700];
+origin = [1 1 1200];
 lookAt = [1 1 600];
-d = 2;
+d = 1;
 
-transformed = perspective(scene, origin, lookAt, d);
+% Test triangles
+triangles = [
+	0 -1 1 4 3 1 2 4 1;
+	2 1 -1 -4 -3 -1 7 8 -1;
+];
+
+transformed = triangles; %perspective(scene, origin, lookAt, d);
 
 % Sample rendering using Matlab's 2D drawing functions
 crudeRender(transformed, 'Testing the renderer');
