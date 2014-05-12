@@ -34,13 +34,20 @@ surf(0:100:(sz(2)-1)*100, 0:100:(sz(1)-1)*100, terrainFine);
 triangles = zeros(100, 3);
 
 %% Apply a perspective projection
-origin = [-10 -10 -10]';
-lookAt = [0 0 0]';
-d = 1;
-%projected = project(triangles, origin, lookAt, d);
+origin = [-10 10 -10];
+lookAt = [0 0 0];
+d = 2;
 
-%% Sample rendering using Matlab's 2D drawing functions
-% TODO
+% Test triangles
+triangles = [
+	0 -1 1 4 3 1 2 4 1;
+	2 1 -1 -4 -3 -1 7 8 -1;
+];
+
+transformed = perspective(triangles, origin, lookAt, d);
+
+% Sample rendering using Matlab's 2D drawing functions
+crudeRender(transformed, 'Testing the renderer');
 
 %% Rasterize using painter's algorithm
 % TODO
