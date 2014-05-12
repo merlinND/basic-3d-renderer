@@ -19,4 +19,8 @@ terrain = [
       610   600   610   605   615   618   625   638   648   665   680   700   705
 ];
 
+
+%% Simple 3D preview
 surf(0:100:(13-1)*100, 0:100:(10-1)*100, terrain);
+
+%% Perspective projection and 2D display
