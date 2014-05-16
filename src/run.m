@@ -1,10 +1,10 @@
-% Array giving the altitude (in meters) of points from a regular grid
-% with a cell size of 100m:
-% - x goes from 0 to (13-1)*100 meters
-% - y goes from 0 to (10-1)*100 meters
-%
-% In order to preview this terrain, just run:
-% > surf(0:100:(13-1)*100,0:100:(10-1)*100, terrain);
+%% *LANDSCAPE GENERATION & RENDERING*
+
+%% TERRAIN GENERATION
+
+%% Define a basic terrain
+% We'll start with a very simple heightMap from the terrain we want to
+% render. We'll do that with a small matrix.
 terrain = [
 	  670   672   670   675   690   680   650   675   690   680   700   892   895;
       680   665   640   630   650   645   630   628   648   650   680   875   893;
@@ -18,33 +18,49 @@ terrain = [
       610   600   610   605   615   618   625   638   648   665   680   700   705
 ];
 
+previewRenderer(terrain);
 
-%% Simple 3D preview
-surf(0:100:(13-1)*100, 0:100:(10-1)*100, terrain);
+%% Refine terrain
+% On this part, we'll use the Diamond-Square Algorithm to create a much
+% more complex terrain.
 
-%% Refine terrain using the diamond-square algorithm
-% TODO: needs better encapsulation
 terrainFine = diamondSquare(diamondSquare(diamondSquare(diamondSquare(terrain, .1), .05), .025), .017);
 
-sz = size(terrainFine);
-surf(0:100:(sz(2)-1)*100, 0:100:(sz(1)-1)*100, terrainFine);
+previewRenderer(terrainFine);
 
-%% Tesselate (generate triangles from the heightmap)
-% TODO
+%% GRAPHIC PIPELINE
+
+%% 1.1 Terrain Tesselation
+% We are going to generate triangles from the height maps. We'll call it a
+% scene.
 scene = tesselation(terrain);
 
-%% Apply a perspective projection
-origin = [20 20 700];
-lookAt = [1 1 600];
-d = 2;
+%% 1.2 Mesh import
+% Add/Import objects into the scene
 
-transformed = perspective(scene, origin, lookAt, d);
+%% 2 Vertex shader
+% Apply a projection that transforms the scene from the 3D world to the 2D
+% world keeping track of the vertices distance from the camera (Z-Buffer).
 
-% Sample rendering using Matlab's 2D drawing functions
-crudeRender(transformed, 'Testing the renderer');
+% Define a camera
+eye = [20 20 700];
+center = [1 1 600];
+C = lookAtCamera(eye, center, [1 1 1])
 
-%% Rasterize using painter's algorithm
+% Define a perspective
+W = 160;
+H = 100;
+fov = pi/3;
+aspectRatio = 16/10;
+P = perspectiveMatrix(fov, aspectRatio, 1, 40)
+
+% Multiply & Project
+[vertices, depths] = applyProjection(C*P, scene);
+
+%% 3 Pixel shader
 % TODO
 
-%% Rasterize using Z-buffer
-% TODO
+% Define the colors of the vertices
+
+% Render it
+basicRenderer(W, H, vertices, depths);
