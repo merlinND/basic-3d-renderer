@@ -36,9 +36,11 @@ surf(0:scale:(sz(2)-1) * scale, 0:scale:(sz(1)-1) * scale, terrainFine);
 scene = tesselation(terrainFine, scale);
 
 %% Apply a perspective projection
-origin = [-100 100 800];
-lookAt = [100 100 1];
-d = 2;
+origin = [0 900 1000];
+lookAt = [1200 0 895];
+d = 2 * scale;
+fov = (pi / 2);
+ratio = (21 / 9);
 
 % Test triangles
 triangles = [
@@ -53,7 +55,12 @@ transformed = perspective(scene, origin, lookAt, d);
 % Sample rendering using Matlab's 2D drawing functions
 heights = mean([scene(:, 3) scene(:, 6) scene(:, 9)], 2);
 coloredRender(transformed, heights, 'Testing the renderer');
-
+% Set axis (depending on origin, d and field of view)
+deltaX = d * tan(fov / 2);
+deltaY = deltaX / ratio;
+axis([-deltaX deltaX -deltaY deltaY ]);
+% Force respecting aspect ratio
+set(gca, 'DataAspectRatio', [1 1 1]);
 %% Rasterize using painter's algorithm
 % TODO
 
