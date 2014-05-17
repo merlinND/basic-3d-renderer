@@ -58,7 +58,52 @@ coloredRender(transformed, heights, 'Testing the renderer');
 axis(getAxes(d, fov, ratio));
 
 %% Rasterize using painter's algorithm
-% TODO
+
+% Compute each triangle's barycenter's distance to the camera
+% ordered = [vertices distance originalHeight] (one line per triangle)
+ordered = [transformed zeros(size(transformed, 1), 2)];
+for i = 1:size(ordered, 1)
+	triangle = reshape(ordered(i, 1:9)', 3, 3);
+	barycenter = sum(triangle, 2) ./ 3;
+	distance = norm(barycenter - origin');
+	ordered(i, 10) = distance;
+	ordered(i, 11) = heights(i);
+end;
+% Render the far-away triangles first,
+% they will then be covered up by nearer ones
+ordered = sortrows(ordered, -10);
+
+minHeight = min(heights);
+maxHeight = max(heights);
+axes = getAxes(d, fov, ratio);
+xMin = axes(1); xMax = axes(2); yMin = axes(3); yMax = axes(4);
+
+% TODO: determine image size based on pixel density per unit
+buffer = ones(round(yMax - yMin), round(xMax - xMin));
+offset = -[(xMin + 1) (yMin + 1)];
+for i = 1:size(ordered, 1)
+	triangle = [ordered(i, 1:2); ordered(i, 4:5); ordered(i, 7:8)];
+	% The image buffer is 1-indexed
+	% (origin is in a corner, not at the center)
+	triangle = triangle + (ones(3, 1) * offset);
+	
+	% Clip to screen
+	triangle = max(triangle, 1);
+	triangle(:, 1) = min(triangle(:, 1), size(buffer, 2) - 1);
+	triangle(:, 2) = min(triangle(:, 2), size(buffer, 1) - 1);
+	
+	% TODO: only draw if it is on screen
+	
+	% Fill image buffer inside this triangle
+	% TODO: refactor color mapping
+	color = (ordered(i, 11) - minHeight) / (maxHeight - minHeight);
+	color = round(245 * color) + 10;
+	buffer = fillTriangleBuffer(buffer, triangle, color);
+end;
+
+greymap = ((0:255) / 255)' * [1 1 1];
+colormap(1 - greymap);
+image(imrotate(fliplr(buffer), 180));
 
 %% Rasterize using Z-buffer
 % TODO
