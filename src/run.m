@@ -51,7 +51,8 @@ triangles = [
 transformed = perspective(scene, origin, lookAt, d);
 
 % Sample rendering using Matlab's 2D drawing functions
-coloredRender(transformed, 'Testing the renderer');
+heights = mean([scene(:, 3) scene(:, 6) scene(:, 9)], 2);
+coloredRender(transformed, heights, 'Testing the renderer');
 
 %% Rasterize using painter's algorithm
 % TODO

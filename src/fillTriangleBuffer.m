@@ -21,7 +21,7 @@ if SigneDet,
     ColonnesGauche = [ColonnesGauche COL(2:N)];
     [ColonnesDroit, LIG] = bresenhamRight(S(1,:),S(3,:));
 else
- % Right intermediate point
+	% Right intermediate point
     [COL, LIG] = bresenhamRight(S(1,:),S(2,:));
     Lignes = LIG;
     ColonnesDroit = COL;
