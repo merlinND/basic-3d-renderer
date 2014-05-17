@@ -24,9 +24,10 @@ scale = 100;
 surf(0:scale:(13-1) * scale, 0:scale:(10-1) * scale, terrain);
 
 %% Refine terrain using the diamond-square algorithm
-nPasses = 4;
+scale = 100;
+nPasses = 1;
 terrainFine = diamondSquare(terrain, nPasses, .1);
-scale = (scale / nPasses);
+scale = (scale / (nPasses + 1));
 
 sz = size(terrainFine);
 surf(0:scale:(sz(2)-1) * scale, 0:scale:(sz(1)-1) * scale, terrainFine);
