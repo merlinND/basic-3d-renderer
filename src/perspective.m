@@ -25,7 +25,6 @@ function [ transformed ] = perspective(scene, origin, lookAt, d)
 	% ----- Perspective
 	% Made easy by the use of homogeneous coordinates
 	transform(4, 3) = (1 ./ d);
-	transform
 	
 	% ----- Apply transform to each triangle and output
 	transformed = zeros(size(scene));
@@ -34,11 +33,9 @@ function [ transformed ] = perspective(scene, origin, lookAt, d)
 		% Use homogeneous coordinates
 		triangleH = [reshape(scene(i, :), 3, 3); ones(1, 3)];
 		
-		%triangleH
-		
 		triangleH = transform * triangleH;
-		% TODO: check
-		triangle = triangleH(1:3, 1:3) ./ (triangleH(4, :) * ones(3, 1));
+		% Apply homogeneous factor
+		triangle = triangleH(1:3, 1:3) ./ (ones(3, 1) * triangleH(4, :));
 		
 		% Output
 		transformed(i, :) = reshape(triangle, 1, 9);
