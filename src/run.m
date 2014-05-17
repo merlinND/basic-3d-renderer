@@ -23,8 +23,7 @@ terrain = [
 surf(0:100:(13-1)*100, 0:100:(10-1)*100, terrain);
 
 %% Refine terrain using the diamond-square algorithm
-% TODO: needs better encapsulation
-terrainFine = diamondSquare(diamondSquare(diamondSquare(diamondSquare(terrain, .1), .05), .025), .017);
+terrainFine = diamondSquare(terrain, nPasses, .1);
 
 sz = size(terrainFine);
 surf(0:100:(sz(2)-1)*100, 0:100:(sz(1)-1)*100, terrainFine);

@@ -20,7 +20,6 @@ function crudeRender(triangles, caption)
 	end;
 	
 	for i = 1:size(triangles, 1)
-		% TODO: fix, coordinates are probably not as expected by fill
 		triangle = reshape(triangles(i, :)', 2, 3)';
 		c = colors(mod(i - 1, nc) + 1);
 		fill(triangle(:, 1), triangle(:, 2), c);
