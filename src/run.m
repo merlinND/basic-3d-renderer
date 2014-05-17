@@ -44,7 +44,7 @@ triangles = [
 	2 1 -1 -4 -3 -1 7 8 -1;
 ];
 
-transformed = triangles; %perspective(scene, origin, lookAt, d);
+transformed = perspective(scene, origin, lookAt, d);
 
 % Sample rendering using Matlab's 2D drawing functions
 crudeRender(transformed, 'Testing the renderer');
