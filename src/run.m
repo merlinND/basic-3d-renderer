@@ -33,14 +33,14 @@ sz = size(terrainFine);
 surf(0:scale:(sz(2)-1) * scale, 0:scale:(sz(1)-1) * scale, terrainFine);
 
 %% Tesselate (generate triangles from the heightmap)
-scene = tesselation(terrainFine, scale);
+scene = tesselation(terrain, scale);
 
 %% Apply a perspective projection
-origin = [0 900 1000];
-lookAt = [1200 0 895];
+origin = [800 200 700];
+lookAt = [0 1200 10];
 d = 2 * scale;
 fov = (pi / 2);
-ratio = (21 / 9);
+ratio = (4 / 3);
 
 % Test triangles
 triangles = [
@@ -59,7 +59,7 @@ coloredRender(transformed, heights, 'Testing the renderer');
 deltaX = d * tan(fov / 2);
 deltaY = deltaX / ratio;
 axis([-deltaX deltaX -deltaY deltaY ]);
-% Force respecting aspect ratio
+% Force the window to respect our aspect ratio
 set(gca, 'DataAspectRatio', [1 1 1]);
 %% Rasterize using painter's algorithm
 % TODO
