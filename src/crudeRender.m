@@ -9,7 +9,7 @@ function crudeRender(triangles, caption)
 		triangles = [triangles(:, 1:2) triangles(:, 4:5) triangles(:, 7:8)];
 	end;
 	
-	% Number of triangles to render
+	% Color is simply alternating
 	colors = ['r', 'g', 'b', 'y', 'w', 'k'];
 	nc = length(colors);
 	

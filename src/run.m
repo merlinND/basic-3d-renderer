@@ -33,13 +33,12 @@ sz = size(terrainFine);
 surf(0:scale:(sz(2)-1) * scale, 0:scale:(sz(1)-1) * scale, terrainFine);
 
 %% Tesselate (generate triangles from the heightmap)
-
-scene = tesselation(terrain, scale);
+scene = tesselation(terrainFine, scale);
 
 %% Apply a perspective projection
-origin = [1 1 1200];
-lookAt = [1 1 600];
-d = 1;
+origin = [-100 100 800];
+lookAt = [100 100 1];
+d = 2;
 
 % Test triangles
 triangles = [
@@ -52,7 +51,7 @@ triangles = [
 transformed = perspective(scene, origin, lookAt, d);
 
 % Sample rendering using Matlab's 2D drawing functions
-crudeRender(transformed, 'Testing the renderer');
+coloredRender(transformed, 'Testing the renderer');
 
 %% Rasterize using painter's algorithm
 % TODO
