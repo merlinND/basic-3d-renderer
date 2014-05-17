@@ -17,20 +17,23 @@ terrain = [
       625   598   560   559   586   558   578   585   600   615   655   680   683;
       610   600   610   605   615   618   625   638   648   665   680   700   705
 ];
-
+% Convert index -> meters
+scale = 100;
 
 %% Simple 3D preview
-surf(0:100:(13-1)*100, 0:100:(10-1)*100, terrain);
+surf(0:scale:(13-1) * scale, 0:scale:(10-1) * scale, terrain);
 
 %% Refine terrain using the diamond-square algorithm
+nPasses = 4;
 terrainFine = diamondSquare(terrain, nPasses, .1);
+scale = (scale / nPasses);
 
 sz = size(terrainFine);
-surf(0:100:(sz(2)-1)*100, 0:100:(sz(1)-1)*100, terrainFine);
+surf(0:scale:(sz(2)-1) * scale, 0:scale:(sz(1)-1) * scale, terrainFine);
 
 %% Tesselate (generate triangles from the heightmap)
-% TODO
-scene = tesselation(terrain);
+
+scene = tesselation(terrain, scale);
 
 %% Apply a perspective projection
 origin = [1 1 1200];
@@ -39,10 +42,12 @@ d = 1;
 
 % Test triangles
 triangles = [
-	0 -1 1 4 3 1 2 4 1;
-	2 1 -1 -4 -3 -1 7 8 -1;
+	0 0 0 1 0 0 1 1 0;
+	%0 -1 1 4 3 1 2 4 1;
+	%2 1 -1 -4 -3 -1 7 8 -1;
 ];
 
+%transformed = perspective(triangles, origin, lookAt, d);
 transformed = perspective(scene, origin, lookAt, d);
 
 % Sample rendering using Matlab's 2D drawing functions
