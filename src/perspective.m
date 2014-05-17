@@ -15,7 +15,8 @@ function [ transformed ] = perspective(scene, origin, lookAt, d)
 	
 	% ----- Rotate
 	w = (lookAt - origin)';
-	u = [w(2); -w(1); 0]; % orthogonal to w
+	% TODO: find a way to compute u even when w = [0 0 100]
+	u = cross([0 0 1], w)'; % orthogonal to w and horizontal
 	v = cross(u, w);
 	% Normalize
 	w = w ./ norm(w);

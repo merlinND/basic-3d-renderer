@@ -25,9 +25,9 @@ surf(0:scale:(13-1) * scale, 0:scale:(10-1) * scale, terrain);
 
 %% Refine terrain using the diamond-square algorithm
 scale = 100;
-nPasses = 1;
+nPasses = 2;
 terrainFine = diamondSquare(terrain, nPasses, .1);
-scale = (scale / (nPasses + 1));
+scale = (scale / (2 ^ nPasses));
 
 sz = size(terrainFine);
 surf(0:scale:(sz(2)-1) * scale, 0:scale:(sz(1)-1) * scale, terrainFine);
@@ -36,9 +36,9 @@ surf(0:scale:(sz(2)-1) * scale, 0:scale:(sz(1)-1) * scale, terrainFine);
 scene = tesselation(terrain, scale);
 
 %% Apply a perspective projection
-origin = [800 200 700];
-lookAt = [0 1200 10];
-d = 2 * scale;
+origin = [100 100 700];
+lookAt = [600 600 10];
+d = 100;
 fov = (pi / 2);
 ratio = (16 / 9);
 
