@@ -43,13 +43,9 @@ function [ scene ] = tesselation( heightMap, scale )
 		end
 	end
 	
-	scene
-	
 	% Scale x and y coordinates
 	scene(:, 1:2) = scene(:, 1:2) * scale;
-	scene(:, 4:5) = scene(:, 1:2) * scale;
-	scene(:, 7:8) = scene(:, 1:2) * scale;
-	
-	scene
+	scene(:, 4:5) = scene(:, 4:5) * scale;
+	scene(:, 7:8) = scene(:, 7:8) * scale;
 end
 
