@@ -40,7 +40,7 @@ origin = [800 200 700];
 lookAt = [0 1200 10];
 d = 2 * scale;
 fov = (pi / 2);
-ratio = (4 / 3);
+ratio = (16 / 9);
 
 % Test triangles
 triangles = [
@@ -55,12 +55,8 @@ transformed = perspective(scene, origin, lookAt, d);
 % Sample rendering using Matlab's 2D drawing functions
 heights = mean([scene(:, 3) scene(:, 6) scene(:, 9)], 2);
 coloredRender(transformed, heights, 'Testing the renderer');
-% Set axis (depending on origin, d and field of view)
-deltaX = d * tan(fov / 2);
-deltaY = deltaX / ratio;
-axis([-deltaX deltaX -deltaY deltaY ]);
-% Force the window to respect our aspect ratio
-set(gca, 'DataAspectRatio', [1 1 1]);
+axis(getAxes(d, fov, ratio));
+
 %% Rasterize using painter's algorithm
 % TODO
 
