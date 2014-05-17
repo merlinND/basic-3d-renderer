@@ -27,7 +27,6 @@ function [ transformed ] = perspective(scene, origin, lookAt, d)
 	% Display base (debug)
 	%r = rotation(1:3, 1:3);
 	%plotBase(origin, r(:, 1), r(:, 2), r(:, 3));
-	rotation
 	
 	% ----- Perspective
 	% Made easy by the use of homogeneous coordinates
@@ -36,21 +35,19 @@ function [ transformed ] = perspective(scene, origin, lookAt, d)
 	
 	% ----- Apply transform to each triangle and output
 	transformed = zeros(size(scene));
+	ir = inv(rotation);
+	it = inv(translation);
 	% For each triangle in the scene
 	for i = 1:size(scene, 1)
-		for j = 1:3:9
-			% Use homogeneous coordinates
-			triangleH = [scene(i, j:(j+2)) 1]';
-			
-			triangleH = perspective * inv(rotation)...
-						* inv(translation) * triangleH;
-			
-			% Apply homogeneous factor
-			triangle = triangleH(1:3) ./ triangleH(4);
+		% Use homogeneous coordinates
+		triangleH = [reshape(scene(i, :), 3, 3); ones(1, 3)];
 
-			% Output
-			transformed(i, j:(j+2)) = triangle';
-		end;
+		triangleH = perspective * ir * it * triangleH;
+		% Apply homogeneous factor
+		triangle = triangleH(1:3, 1:3) ./ (ones(3, 1) * triangleH(4, :));
+
+		% Output
+		transformed(i, :) = reshape(triangle, 1, 9);
 	end;
 end
 
