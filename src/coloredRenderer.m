@@ -1,4 +1,4 @@
-function coloredRender(triangles, heights, caption)
+function coloredRenderer(triangles, heights, d, fov, aspectRatio, caption)
 %COLOREDRENDER Display the given list of 3D triangles using Matlab's fill
 %function, and choosing the triangle's color based on its height
 %   triangles: An n x 9 matrix (three vertex per line)
@@ -8,8 +8,9 @@ function coloredRender(triangles, heights, caption)
 	maxHeight = max(heights);
 	
 	figure(1);
+    clf();
 	hold on;
-	if (nargin > 1)
+	if (nargin > 5)
 		title(caption)
 	end;
 	
@@ -22,6 +23,6 @@ function coloredRender(triangles, heights, caption)
 		
 		fill(triangle(:, 1), triangle(:, 2), c);
 	end;
-
+    axis(getAxes(d, fov, aspectRatio));
 end
 

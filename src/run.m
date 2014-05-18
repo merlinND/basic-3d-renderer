@@ -1,10 +1,10 @@
-% Array giving the altitude (in meters) of points from a regular grid
-% with a cell size of 100m:
-% - x goes from 0 to (13-1)*100 meters
-% - y goes from 0 to (10-1)*100 meters
-%
-% In order to preview this terrain, just run:
-% > surf(0:100:(13-1)*100,0:100:(10-1)*100, terrain);
+%% *LANDSCAPE GENERATION & RENDERING*
+
+%% TERRAIN GENERATION
+
+%% Define a basic terrain
+% We'll start with a very simple heightMap from the terrain we want to
+% render. We'll do that with a small matrix.
 terrain = [
 	  670   672   670   675   690   680   650   675   690   680   700   892   895;
       680   665   640   630   650   645   630   628   648   650   680   875   893;
@@ -17,50 +17,61 @@ terrain = [
       625   598   560   559   586   558   578   585   600   615   655   680   683;
       610   600   610   605   615   618   625   638   648   665   680   700   705
 ];
-% Convert index -> meters
 scale = 100;
 
-%% Simple 3D preview
-surf(0:scale:(13-1) * scale, 0:scale:(10-1) * scale, terrain);
+previewRenderer(terrain, scale);
 
-%% Refine terrain using the diamond-square algorithm
-scale = 100;
+%% Refine terrain
+% On this part, we'll use the Diamond-Square Algorithm to create a much
+% more complex terrain.
 nPasses = 2;
+scale = scale/(2^nPasses);
 terrainFine = diamondSquare(terrain, nPasses, .1);
-scale = (scale / (2 ^ nPasses));
 
-sz = size(terrainFine);
-surf(0:scale:(sz(2)-1) * scale, 0:scale:(sz(1)-1) * scale, terrainFine);
+previewRenderer(terrainFine, scale);
 
-%% Tesselate (generate triangles from the heightmap)
-scene = tesselation(terrain, scale);
+%% GRAPHIC PIPELINE
 
-%% Apply a perspective projection
-origin = [100 100 700];
-lookAt = [600 600 10];
+%% 1 Scene Generation
+
+%% 1.1 Terrain Tesselation
+% We are going to generate triangles from the height maps. We'll call it a
+% scene.
+scene = tesselation(terrainFine, scale);
+
+%% 1.2 Mesh import
+% Add/Import objects into the scene
+
+%% 2 Vertex shader
+% Apply a projection that transforms the scene from the 3D world to the 2D
+% world keeping track of the vertices distance from the camera (Z-Buffer).
+
+% Define a camera
+origin = [0 0 700];
+lookAt = [100 100 600];
+
+% Define a perspective
 d = 100;
 fov = (pi / 2);
 ratio = (16 / 9);
 
-% Test triangles
-triangles = [
-	0 0 0 1 0 0 1 1 0;
-	%0 -1 1 4 3 1 2 4 1;
-	%2 1 -1 -4 -3 -1 7 8 -1;
-];
-
-%transformed = perspective(triangles, origin, lookAt, d);
+% Apply the perspective
 transformed = perspective(scene, origin, lookAt, d);
 
-% Sample rendering using Matlab's 2D drawing functions
+% Color definition height list
 heights = mean([scene(:, 3) scene(:, 6) scene(:, 9)], 2);
-coloredRender(transformed, heights, 'Testing the renderer');
-axis(getAxes(d, fov, ratio));
 
-%% Rasterize using painter's algorithm
+% Simple renderer
+coloredRenderer(transformed, heights, d, fov, ratio);
 
+%% 3 Pixel Shader
+
+%% 3.1 Rasterization via the Painter's Algorithm
 % Compute each triangle's barycenter's distance to the camera
 % ordered = [vertices distance originalHeight] (one line per triangle)
+figure(1);
+clf();
+
 ordered = [transformed zeros(size(transformed, 1), 2)];
 for i = 1:size(ordered, 1)
 	triangle = reshape(ordered(i, 1:9)', 3, 3);
@@ -105,5 +116,5 @@ greymap = ((0:255) / 255)' * [1 1 1];
 colormap(1 - greymap);
 image(imrotate(fliplr(buffer), 180));
 
-%% Rasterize using Z-buffer
+%% 3.1 Rasterization via the Z-Buffer
 % TODO
