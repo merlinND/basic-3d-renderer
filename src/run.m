@@ -80,7 +80,12 @@ colors = assignColorsFromHeights(heights, ordered);
 
 %% 3.4 Rasterization via the Painter's Algorithm
 
-painterRenderer( ordered, 4, getAxes(d, fov, ratio), greymap, colors );
+density = 10;
+
+painterRenderer( ordered, density, getAxes(d, fov, ratio), greymap, colors );
 
 %% 3.5 Rasterization via the Z-Buffer
 
+zBuffer = genZBuffer( ordered, density, getAxes(d, fov, ratio) );
+
+zBufferRenderer( ordered, zBuffer, density, getAxes(d, fov, ratio), colors );
