@@ -14,7 +14,7 @@ function [ transformed ] = perspective(scene, origin, lookAt, d)
 	translation(1:3, 4) = origin';
 	
 	% ----- Rotate
-	w = (lookAt - origin)';
+	w = (origin - lookAt)';
 	% TODO: find a way to compute u even when w = [0 0 100]
 	u = cross([0 0 1], w)'; % orthogonal to w and horizontal
 	v = cross(u, w);
