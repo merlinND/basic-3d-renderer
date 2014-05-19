@@ -27,6 +27,7 @@ previewRenderer(terrain, scale);
 nPasses = 3;
 scale = scale/(2^nPasses);
 terrainFine = diamondSquare(terrain, nPasses, .1);
+terrainFine = clipTerrain( terrainFine, 590 );
 
 previewRenderer(terrainFine, scale);
 

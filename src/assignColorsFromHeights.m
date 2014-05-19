@@ -26,9 +26,9 @@ function [ palette ] = getPalette(randomness)
 	palette = zeros(255, 3);
 	
 	% First roughly define the colors and corresponding height
-	palette = fillRows(palette, 1, 33, [0.16, 0.5, 0.73]); % Sea
-	palette = fillRows(palette, 34, 110, [0.15 0.68 0.38]); % Grass
-	palette = fillRows(palette, 111, 180, [0.5 0.5 0.5]); % Mountain
+	palette = fillRows(palette, 1, 2, [0.16, 0.5, 0.73]); % Sea
+	palette = fillRows(palette, 3, 65, [0.15 0.68 0.38]); % Grass
+	palette = fillRows(palette, 66, 180, [0.5 0.5 0.5]); % Mountain
 	palette = fillRows(palette, 181, 255, [0.95 0.95 0.95]); % Snow
 	
 	% Then apply random perturbations in light intensity
