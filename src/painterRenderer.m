@@ -20,11 +20,9 @@ for i = 1:size(ordered, 1)
 	
 	% Clip to screen
 	triangle = max(triangle, 1);
-	triangle(:, 1) = min(triangle(:, 1), size(buffer, 2) - 1);
-	triangle(:, 2) = min(triangle(:, 2), size(buffer, 1) - 1);
+	triangle(:, 1) = min(density * triangle(:, 1), size(buffer, 2) - 1);
+	triangle(:, 2) = min(density * triangle(:, 2), size(buffer, 1) - 1);
     
-    triangle = triangle .* (density - 1);
-	
 	% TODO: only draw if it is on screen
 	buffer = fillTriangleBuffer(buffer, triangle, colors(i, 1));
 end;
