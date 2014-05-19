@@ -4,7 +4,7 @@ function [ colors ] = assignColorsFromHeights( heights, ordered )
 	minHeight = min(heights);
 	maxHeight = max(heights);
 
-	palette = getPalette();
+	palette = getPalette(0.35);
 	colors = zeros(size(ordered, 1), 3);
 	
 	for i = 1:size(ordered, 1)
@@ -17,22 +17,24 @@ function [ colors ] = assignColorsFromHeights( heights, ordered )
 	end;
 end
 
-function [ palette ] = getPalette()
+function [ palette ] = getPalette(randomness)
 %GETPALETTE Generate the color palette
 %	A 255 x 3 vector, with an [r g b] color for each "height level"
 %	In order to use, normalize the heights and pick the corresponding color
-%	Can also be used directly with the `colormap` matlab function.
+%	Could also be used directly with the `colormap` matlab function.
 	
 	palette = zeros(255, 3);
 	
 	% First roughly define the colors and corresponding height
-	palette = fillRows(palette, 1, 127, [0 0 1]); % Sea
-	palette = fillRows(palette, 128, 200, [0 1 0]); % Grass
-	palette = fillRows(palette, 201, 240, [0.6 0.6 0.6]); % Mountain
-	palette = fillRows(palette, 241, 255, [0.9 0.9 0.9]); % Snow
+	palette = fillRows(palette, 1, 33, [0 0 1]); % Sea
+	palette = fillRows(palette, 34, 110, [0 1 0]); % Grass
+	palette = fillRows(palette, 111, 180, [0.6 0.6 0.6]); % Mountain
+	palette = fillRows(palette, 181, 255, [0.9 0.9 0.9]); % Snow
 	
 	% Then apply random perturbations in light intensity
-	palette = palette + 0.05 * rand(length(palette), 1) * [1 1 1];
+	perturbation = rand(length(palette), 1) - 0.5 * ones(length(palette), 1);
+	perturbation = perturbation * [1 1 1]; % Make [r g b]
+	palette = palette + randomness * perturbation;
 	% Clip values
 	palette = min(1, palette);
 	palette = max(0, palette);
