@@ -79,13 +79,12 @@ colors = assignColorsFromHeights(heights, ordered);
 
 %% 3.4 Illumination using Phong's simplified model
 lightSource = [1200 1200 1200];
-colors = applyPhongIllumination(ordered, lightSource, origin, colors);
+colorsPhong = applyPhongIllumination(ordered, lightSource, origin, colors);
 
 %% 3.5 Rasterization via the Painter's Algorithm
-
 density = 5;
 
-painterRenderer( ordered, density, getAxes(d, fov, ratio), colors );
+painterRenderer( ordered, density, getAxes(d, fov, ratio), colorsPhong );
 
 %% 3.6 Rasterization via the Z-Buffer
 

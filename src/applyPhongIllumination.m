@@ -13,10 +13,12 @@ function [ colors ] = applyPhongIllumination( triangles, lightSource, camera, co
 		
 		centroid = mean(triangle, 2)';
 		surfaceToLight = (lightSource - centroid);
+		surfaceToLight = surfaceToLight / norm(surfaceToLight);
 		surfaceToEye = (camera - centroid);
+		surfaceToEye = surfaceToEye / norm(surfaceToEye);
 		
-		normal = cross(triangle(:, 2) - triangle(:, 1), triangle(:, 3) - triangle(:, 1));
-		normal = normal' ./ norm(normal);
+		normal = - cross(triangle(:, 2) - triangle(:, 1), triangle(:, 3) - triangle(:, 1));
+		normal = normal' / norm(normal);
 		
 		% Ambient: TODO
 		La = 0.8;
@@ -34,7 +36,7 @@ function [ colors ] = applyPhongIllumination( triangles, lightSource, camera, co
 		Ls = Ls ^ alpha;
 		
 		% L is the final coefficient (0..1) applied as a result
-		L = (La + Ld + Ls);
+		L = (La + 0.5 * Ld + 0.1 * Ls);
 		L = max(0, L);
 		
 		colors(i, :) = L * colors(i, :);
