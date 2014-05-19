@@ -47,12 +47,12 @@ scene = tesselation(terrainFine, scale);
 % world keeping track of the vertices distance from the camera (Z-Buffer).
 
 % Define a camera
-origin = [100 100 1000];
+origin = [-100 -100 1000];
 lookAt = [1200 1200 10];
 
 % Define a perspective
 d = 100;
-fov = (pi / 2);
+fov = (pi / 3);
 ratio = (16 / 9);
 
 % Apply the perspective
@@ -80,9 +80,9 @@ colors = assignColorsFromHeights(heights, ordered);
 
 %% 3.4 Rasterization via the Painter's Algorithm
 
-density = 10;
+density = 5;
 
-painterRenderer( ordered, density, getAxes(d, fov, ratio), greymap, colors );
+painterRenderer( ordered, density, getAxes(d, fov, ratio), colors );
 
 %% 3.5 Rasterization via the Z-Buffer
 

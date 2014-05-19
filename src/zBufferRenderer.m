@@ -10,7 +10,7 @@ yMin = axes(3);
 yMax = axes(4);
 
 % TODO: determine image size based on pixel density per unit
-img = ones(density * round(yMax - yMin), density * round(xMax - xMin));
+img = ones(density * round(yMax - yMin), density * round(xMax - xMin), 3);
 offset = -[(xMin + 1) (yMin + 1)];
 for i = 1:size(ordered, 1)
 	triangle = [ordered(i, 1:2); ordered(i, 4:5); ordered(i, 7:8)];
@@ -24,7 +24,7 @@ for i = 1:size(ordered, 1)
 	triangle(:, 2) = min(density * triangle(:, 2), size(img, 1) - 1);
 	
 	% TODO: only draw if it is on screen
-	img = fillTriangleImage(img, zBuffer, triangle, ordered(i, 10), [colors(i, 1)/255 colors(i, 2)/255 colors(i, 3)/255]);
+	img = fillTriangleImage(img, zBuffer, triangle, ordered(i, 10), [colors(i, 1) colors(i, 2) colors(i, 3)]);
 end;
 
 image(imrotate(img, 180));

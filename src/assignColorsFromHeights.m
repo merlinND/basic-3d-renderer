@@ -15,7 +15,6 @@ function [ colors ] = assignColorsFromHeights( heights, ordered )
 		colors(i, 2) = palette(index, 2);
 		colors(i, 3) = palette(index, 3);
 	end;
-
 end
 
 function [ palette ] = getPalette()
