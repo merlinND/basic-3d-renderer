@@ -47,7 +47,7 @@ scene = tesselation(terrainFine, scale);
 % world keeping track of the vertices distance from the camera (Z-Buffer).
 
 % Define a camera
-origin = [-100 -100 1000];
+origin = [-500 -500 1500];
 lookAt = [1200 1200 10];
 
 % Define a perspective
