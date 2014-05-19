@@ -10,7 +10,7 @@ yMin = axes(3);
 yMax = axes(4);
 
 % TODO: determine image size based on pixel density per unit
-img = ones(density * round(yMax - yMin), density * round(xMax - xMin));
+img = ones(density * round(yMax - yMin), density * round(xMax - xMin), 3);
 offset = -[(xMin + 1) (yMin + 1)];
 for i = 1:size(ordered, 1)
 	triangle = [ordered(i, 1:2); ordered(i, 4:5); ordered(i, 7:8)];
