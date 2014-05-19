@@ -21,14 +21,15 @@ function [ colorsOut ] = applyPhongIllumination( triangles, lightSource, camera,
 		normal = - cross(triangle(:, 2) - triangle(:, 1), triangle(:, 3) - triangle(:, 1));
 		normal = normal' / norm(normal);
 		
-		% Ambient: TODO
-		La = 0.15;
+		% Ambient
+		% TODO: should depend on the characteristics of the light source
+		La = 0.18;
 		
 		% Diffuse
 		Ld = dot(surfaceToLight, normal);
 		
 		% Specular
-		symetric = centroid - surfaceToLight + 2 * normal * dot(surfaceToLight, normal);
+		symetric = centroid - surfaceToLight + 2 * dot(surfaceToLight, normal) * normal;
 		surfaceToSymetric = (symetric - normal);
 		surfaceToSymetric = surfaceToSymetric / norm(surfaceToSymetric);
 		

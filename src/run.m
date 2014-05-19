@@ -79,10 +79,10 @@ randomness = 0.15;
 colors = assignColorsFromHeights(heights, ordered, randomness);
 
 %% 3.4 Illumination using Phong's simplified model
-lightSource = [600 600 1000];
+lightSource = [-600 -300 1500];
 colorsPhong = applyPhongIllumination(ordered, lightSource, origin, colors);
 
-% 3.5 Rasterization via the Painter's Algorithm
+%% 3.5 Rasterization via the Painter's Algorithm
 density = 10;
 
 painterRenderer( ordered, density, getAxes(d, fov, ratio), colorsPhong );
