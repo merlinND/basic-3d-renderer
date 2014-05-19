@@ -1,10 +1,10 @@
-function [ colors ] = assignColorsFromHeights( heights, ordered )
+function [ colors ] = assignColorsFromHeights( heights, ordered, randomness )
 %ASSIGNCOLORSFROMHEIGHTS An [r g b] color with values between 0 and 1
 
 	minHeight = min(heights);
 	maxHeight = max(heights);
 
-	palette = getPalette(0.2);
+	palette = getPalette(randomness);
 	colors = zeros(size(ordered, 1), 3);
 	
 	for i = 1:size(ordered, 1)
@@ -27,7 +27,8 @@ function [ palette ] = getPalette(randomness)
 	
 	% First roughly define the colors and corresponding height
 	palette = fillRows(palette, 1, 2, [0.16, 0.5, 0.73]); % Sea
-	palette = fillRows(palette, 3, 65, [0.15 0.68 0.38]); % Grass
+	palette = fillRows(palette, 3, 6, [0.98, 0.97, 0.73]); % Sand
+	palette = fillRows(palette, 7, 65, [0.15 0.68 0.38]); % Grass
 	palette = fillRows(palette, 66, 180, [0.5 0.5 0.5]); % Mountain
 	palette = fillRows(palette, 181, 255, [0.95 0.95 0.95]); % Snow
 	
