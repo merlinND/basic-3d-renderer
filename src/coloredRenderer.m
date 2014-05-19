@@ -10,6 +10,7 @@ function coloredRenderer(triangles, heights, d, fov, aspectRatio, caption)
 	figure(1);
     clf();
 	hold on;
+	
 	if (nargin > 5)
 		title(caption)
 	end;
@@ -21,7 +22,8 @@ function coloredRenderer(triangles, heights, d, fov, aspectRatio, caption)
 		c = (heights(i) - minHeight) / (maxHeight - minHeight);
 		c = [1 1 1] * (1 - c);
 		
-		fill(triangle(:, 1), triangle(:, 2), c);
+		h = fill(triangle(:, 1), triangle(:, 2), c);
+		set(h, 'edgecolor', 'none');
 	end;
     axis(getAxes(d, fov, aspectRatio));
 end
