@@ -4,7 +4,7 @@ function [ colors ] = assignColorsFromHeights( heights, ordered )
 	minHeight = min(heights);
 	maxHeight = max(heights);
 
-	palette = getPalette(0.35);
+	palette = getPalette(0.2);
 	colors = zeros(size(ordered, 1), 3);
 	
 	for i = 1:size(ordered, 1)
@@ -26,10 +26,10 @@ function [ palette ] = getPalette(randomness)
 	palette = zeros(255, 3);
 	
 	% First roughly define the colors and corresponding height
-	palette = fillRows(palette, 1, 33, [0 0 1]); % Sea
-	palette = fillRows(palette, 34, 110, [0 1 0]); % Grass
-	palette = fillRows(palette, 111, 180, [0.6 0.6 0.6]); % Mountain
-	palette = fillRows(palette, 181, 255, [0.9 0.9 0.9]); % Snow
+	palette = fillRows(palette, 1, 33, [0.16, 0.5, 0.73]); % Sea
+	palette = fillRows(palette, 34, 110, [0.15 0.68 0.38]); % Grass
+	palette = fillRows(palette, 111, 180, [0.5 0.5 0.5]); % Mountain
+	palette = fillRows(palette, 181, 255, [0.95 0.95 0.95]); % Snow
 	
 	% Then apply random perturbations in light intensity
 	perturbation = rand(length(palette), 1) - 0.5 * ones(length(palette), 1);
