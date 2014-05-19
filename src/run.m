@@ -74,18 +74,20 @@ coloredRenderer(transformed, heights, d, fov, ratio);
 
 ordered = reorder(transformed, origin, heights);
 
-%% 3.3 Color palette generation
-
-greymap = ((0:255) / 255)' * [1 1 1];
+%% 3.3 Color assignment depending on height
 colors = assignColorsFromHeights(heights, ordered);
 
-%% 3.4 Rasterization via the Painter's Algorithm
+%% 3.4 Illumination using Phong's simplified model
+lightSource = [1200 1200 1200];
+colors = applyPhongIllumination(ordered, lightSource, origin, colors);
+
+%% 3.5 Rasterization via the Painter's Algorithm
 
 density = 5;
 
 painterRenderer( ordered, density, getAxes(d, fov, ratio), colors );
 
-%% 3.5 Rasterization via the Z-Buffer
+%% 3.6 Rasterization via the Z-Buffer
 
 zBuffer = genZBuffer( ordered, density, getAxes(d, fov, ratio) );
 
