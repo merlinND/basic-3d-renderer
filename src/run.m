@@ -24,7 +24,7 @@ previewRenderer(terrain, scale);
 %% Refine terrain
 % On this part, we'll use the Diamond-Square Algorithm to create a much
 % more complex terrain.
-nPasses = 5;
+nPasses = 3;
 scale = scale/(2^nPasses);
 terrainFine = diamondSquare(terrain, nPasses, .1);
 
@@ -80,7 +80,7 @@ colors = assignColorsFromHeights(heights, ordered);
 
 %% 3.4 Rasterization via the Painter's Algorithm
 
-density = 4;
+density = 5;
 
 painterRenderer( ordered, density, getAxes(d, fov, ratio), colors );
 
