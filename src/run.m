@@ -24,7 +24,7 @@ previewRenderer(terrain, scale);
 %% Refine terrain
 % On this part, we'll use the Diamond-Square Algorithm to create a much
 % more complex terrain.
-nPasses = 2;
+nPasses = 5;
 scale = scale/(2^nPasses);
 terrainFine = diamondSquare(terrain, nPasses, .1);
 
@@ -47,7 +47,7 @@ scene = tesselation(terrainFine, scale);
 % world keeping track of the vertices distance from the camera (Z-Buffer).
 
 % Define a camera
-origin = [-500 -500 1500];
+origin = [-600 -300 1500];
 lookAt = [1200 1200 10];
 
 % Define a perspective
@@ -80,7 +80,7 @@ colors = assignColorsFromHeights(heights, ordered);
 
 %% 3.4 Rasterization via the Painter's Algorithm
 
-density = 5;
+density = 4;
 
 painterRenderer( ordered, density, getAxes(d, fov, ratio), colors );
 
