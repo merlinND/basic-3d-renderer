@@ -24,6 +24,7 @@ previewRenderer(terrain, scale);
 %% Refine terrain
 % On this part, we'll use the Diamond-Square Algorithm to create a much
 % more complex terrain.
+scale = 100;
 nPasses = 3;
 scale = scale/(2^nPasses);
 terrainFine = diamondSquare(terrain, nPasses, .1);
@@ -71,23 +72,24 @@ heights = mean([scene(:, 3) scene(:, 6) scene(:, 9)], 2);
 coloredRenderer(transformed, heights, d, fov, ratio);
 
 %% 3.2 Distance calculation & reordering
-
 ordered = reorder(transformed, origin, heights);
 
 %% 3.3 Color assignment depending on height
-colors = assignColorsFromHeights(heights, ordered);
+randomness = 0.15;
+colors = assignColorsFromHeights(heights, ordered, randomness);
 
 %% 3.4 Illumination using Phong's simplified model
-lightSource = [1200 1200 1200];
+lightSource = [600 600 1000];
 colorsPhong = applyPhongIllumination(ordered, lightSource, origin, colors);
 
-%% 3.5 Rasterization via the Painter's Algorithm
-density = 5;
+% 3.5 Rasterization via the Painter's Algorithm
+density = 10;
 
 painterRenderer( ordered, density, getAxes(d, fov, ratio), colorsPhong );
-
+set(gca, 'DataAspectRatio', [1 1 1]);
 %% 3.6 Rasterization via the Z-Buffer
 
 zBuffer = genZBuffer( ordered, density, getAxes(d, fov, ratio) );
 
-zBufferRenderer( ordered, zBuffer, density, getAxes(d, fov, ratio), colors );
+zBufferRenderer( ordered, zBuffer, density, getAxes(d, fov, ratio), colorsPhong );
+set(gca, 'DataAspectRatio', [1 1 1]);
