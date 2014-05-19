@@ -24,7 +24,7 @@ for i = 1:size(ordered, 1)
 	triangle(:, 2) = min(density * triangle(:, 2), size(img, 1) - 1);
 	
 	% TODO: only draw if it is on screen
-	img = fillTriangleImage(img, zBuffer, triangle, ordered(i, 10), [colors(i, 1)/255 colors(i, 2)/255 colors(i, 3)/255]);
+	img = fillTriangleImage(img, zBuffer, triangle, ordered(i, 10), [colors(i, 1) colors(i, 2) colors(i, 3)]);
 end;
 
 image(imrotate(img, 180));

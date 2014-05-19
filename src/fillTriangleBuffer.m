@@ -34,8 +34,14 @@ end
 % Lines
  for n = 1:size(Lignes,2),
      for c = ColonnesGauche(n):ColonnesDroit(n),
-         if buf(Lignes(n),c)<value
-            buf(Lignes(n),c) = value;
+         if size(value, 2) > 1
+            buf(Lignes(n),c, 1) = value(1);
+            buf(Lignes(n),c, 2) = value(2);
+            buf(Lignes(n),c, 3) = value(3);
+         else
+            if buf(Lignes(n),c)<value
+               buf(Lignes(n),c) = value;
+            end
          end
      end
  end

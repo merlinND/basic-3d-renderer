@@ -82,7 +82,7 @@ colors = assignColorsFromHeights(heights, ordered);
 
 density = 20;
 
-painterRenderer( ordered, density, getAxes(d, fov, ratio), greymap, colors );
+painterRenderer( ordered, density, getAxes(d, fov, ratio), colors );
 
 %% 3.5 Rasterization via the Z-Buffer
 
